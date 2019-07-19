@@ -1,11 +1,38 @@
 from fastapi import FastAPI
+import subprocess
 
 app = FastAPI()
 
-@app.get("/")
-def read_root():
-    return {"Hello": "World"}
 
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: str = None):
-    return {"item_id": item_id, "q": q}
+# return: command result if OK -> 0 else error
+def process_call(cmd: str) -> str:
+    result = subprocess.check_output(cmd.split())
+    return str(result)
+
+
+@app.get("/")
+def read_item(light: str = None) -> dict:
+    if light not in ['on', 'off']:
+        return {"400": "Bad Request"}
+    elif light == 'on':
+        return light_on()
+    elif light == 'off':
+        return light_off()
+    else:
+        return {'500': 'internal server error'}
+
+
+def light_on() -> dict:
+    r = process_call('python3 irrp.py -p -g17 -f codes light:on')
+    if r != "0":
+        return {"503":"Service Unavailable \n" + r}
+    return {"200": "OK"}
+
+
+def light_off() -> dict:
+    r = process_call('python3 irrp.py -p -g17 -f codes light:off')
+    if r != "0":
+        return {"503":"Service Unavailable \n" + r}
+    return {"200": "OK"}
+
+    pass
