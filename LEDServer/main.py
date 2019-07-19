@@ -24,14 +24,14 @@ def read_item(light: str = None) -> dict:
 
 def light_on() -> dict:
     r = process_call('python3 irrp.py -p -g17 -f codes light:on')
-    if r != "0":
+    if r == b"":
         return {"503":"Service Unavailable \n" + r}
     return {"200": "OK"}
 
 
 def light_off() -> dict:
     r = process_call('python3 irrp.py -p -g17 -f codes light:off')
-    if r != "0":
+    if r == b"":
         return {"503":"Service Unavailable \n" + r}
     return {"200": "OK"}
 
