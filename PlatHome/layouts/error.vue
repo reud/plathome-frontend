@@ -12,27 +12,25 @@
   </v-app>
 </template>
 
-<script>
-export default {
-  layout: 'empty',
-  props: {
-    error: {
-      type: Object,
-      default: null
-    }
-  },
-  head() {
-    const title =
-      this.error.statusCode === 404 ? this.pageNotFound : this.otherError
+<script lang="ts">
+import { Component, Prop, Vue } from 'vue-property-decorator';
+interface ErrorInterface {
+  statusCode?: number;
+}
+@Component
+export default class Error extends Vue {
+  @Prop()
+  public error: ErrorInterface = {};
+  public static layout = 'empty';
+  public pageNotFound: string = '404 Not Found';
+  public otherError: string = 'An error occurred';
+
+  public head() {
+    const title: string =
+      this.error.statusCode === 404 ? this.pageNotFound : this.otherError;
     return {
       title
-    }
-  },
-  data() {
-    return {
-      pageNotFound: '404 Not Found',
-      otherError: 'An error occurred'
-    }
+    };
   }
 }
 </script>

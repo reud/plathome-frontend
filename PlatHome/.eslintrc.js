@@ -14,6 +14,7 @@ module.exports = {
     '@nuxtjs',
     'plugin:nuxt/recommended',
     'plugin:prettier/recommended',
+    'plugin:vue/base',
     'prettier/vue',
     'prettier/@typescript-eslint'
   ],
@@ -24,6 +25,13 @@ module.exports = {
   // add your custom rules here
   rules: {
     "no-unused-vars": "off",
-    "@typescript-eslint/no-unused-vars": "error"
-  }
+    "@typescript-eslint/no-unused-vars": "error",
+    "prettier/prettier": "error"
+
+  },
+  settings: {
+    node: {
+      "tryExtensions": [".ts", ".js", ".json", ".node"]
+    }
+  },
 }

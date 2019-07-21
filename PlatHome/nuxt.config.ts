@@ -1,5 +1,6 @@
-import colors from 'vuetify/es5/util/colors'
-import NuxtConfiguration from '@nuxt/config'
+import colors from 'vuetify/es5/util/colors';
+import NuxtConfiguration from '@nuxt/config';
+
 const nuxtConfig: NuxtConfiguration = {
   mode: 'spa',
   /*
@@ -75,7 +76,18 @@ const nuxtConfig: NuxtConfiguration = {
     /*
      ** You can extend webpack config here
      */
-    extend(config, ctx) {}
+    extend(config, ctx) {
+      if (ctx.isDev && ctx.isClient) {
+        if (!config.module) return; // undefinedの場合、pushせずにreturnするように追加
+        config.module.rules.push({
+          enforce: 'pre',
+          test: /\.(js|vue)$/,
+          loader: 'eslint-loader',
+          exclude: /(node_modules)/
+        });
+      }
+    }
   }
-}
-export default nuxtConfig
+};
+
+export default nuxtConfig;
