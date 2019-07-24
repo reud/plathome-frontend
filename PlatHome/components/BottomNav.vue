@@ -5,6 +5,7 @@
       :value="true"
       absolute
       color="transparent"
+      fixed
       app
     >
       <v-btn
