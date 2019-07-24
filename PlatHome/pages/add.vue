@@ -24,7 +24,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-
+import { Sleep } from '@/utilities';
 @Component
 export default class Add extends Vue {
   public valid: boolean = false;
@@ -32,20 +32,12 @@ export default class Add extends Vue {
   public hostname: string = '';
   public progress: string = '';
   public hostnameLock: boolean = false;
-  // a function for mock and tests
-  public sleep(time: number): Promise<any> {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve();
-      }, time);
-    });
-  }
 
   // mock function
   public async resolveHostname() {
     this.progress = 'hostname resolver started...';
     this.hostnameLock = true;
-    await this.sleep(3000);
+    await Sleep(3000);
     this.hostname = 'mock-hostname';
     this.progress = '';
     this.hostnameLock = false;
