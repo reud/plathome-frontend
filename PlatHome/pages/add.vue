@@ -1,7 +1,7 @@
 <template>
   <v-form ref="form" v-model="valid">
     <v-container>
-      <p>Add New Device</p>
+      <h2>Add New Device</h2>
       <v-layout wrap>
         <v-text-field
           v-model="ipAddrModel"
@@ -18,6 +18,16 @@
         <v-btn @click="resolveHostname">get hostname from IP address</v-btn>
         <p>{{ progress }}</p>
       </v-layout>
+      <v-layout wrap>
+        <v-select
+          v-model="selectedDevice"
+          :items="deviceTypes"
+          label="device type"
+        ></v-select>
+        <p>{{ selectedDevice }}</p>
+      </v-layout>
+      <h2>API Settings</h2>
+      <h3>EZ requester</h3>
     </v-container>
   </v-form>
 </template>
@@ -25,6 +35,7 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import { Sleep } from '@/utilities';
+import { DeviceTypes } from '@/types';
 @Component
 export default class Add extends Vue {
   public valid: boolean = false;
@@ -32,7 +43,8 @@ export default class Add extends Vue {
   public hostname: string = '';
   public progress: string = '';
   public hostnameLock: boolean = false;
-
+  public deviceTypes: string[] = DeviceTypes;
+  public selectedDevice: string = '';
   // mock function
   public async resolveHostname() {
     this.progress = 'hostname resolver started...';

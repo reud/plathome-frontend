@@ -55,7 +55,7 @@ export default class Default extends Vue {
   public fixed: boolean = false;
   public miniVariant: boolean = false;
   public right: boolean = true;
-  public title: string = 'Vuetify.js';
+  public title: string = 'PlatHome';
 
   public items: Item[] = [
     {
