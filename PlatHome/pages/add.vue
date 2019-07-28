@@ -1,3 +1,4 @@
+import { RequestTypes } from '../types';
 <template>
   <v-form ref="form" v-model="valid">
     <v-container>
@@ -28,14 +29,26 @@
       </v-layout>
       <h2>API Settings</h2>
       <h3>EZ requester</h3>
+      <v-btn block color="secondary" dark @click="addRequestButtonPush"
+        >Add Request Button</v-btn
+      >
+      <v-layout v-for="(ezRequest, i) in ezRequests" :key="i" wrap>
+        <!--v-modelなど色々仮実装 -->
+        <v-select
+          v-model="ezRequest.model"
+          :items="requestTypes"
+          :label="'protocol ' + i"
+        ></v-select>
+      </v-layout>
     </v-container>
   </v-form>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import { Sleep } from '@/utilities';
-import { DeviceTypes } from '@/types';
+import { GetValueArrayFromEnum, Sleep } from '@/utilities';
+import { DeviceTypes, EzRequesterModel, RequestTypes } from '@/types';
+
 @Component
 export default class Add extends Vue {
   public valid: boolean = false;
@@ -43,8 +56,20 @@ export default class Add extends Vue {
   public hostname: string = '';
   public progress: string = '';
   public hostnameLock: boolean = false;
-  public deviceTypes: string[] = DeviceTypes;
+  public deviceTypes: string[] = GetValueArrayFromEnum(DeviceTypes);
   public selectedDevice: string = '';
+  // 実際のデータではデータベースから既存値を取ってくる処理になると思う
+  public requestTypes: string[] = GetValueArrayFromEnum(RequestTypes);
+  public ezRequests: EzRequesterModel[] = [];
+
+  addRequestButtonPush() {
+    this.ezRequests.push({
+      url: '',
+      protocol: RequestTypes.HTTP,
+      model: ''
+    });
+  }
+
   // mock function
   public async resolveHostname() {
     this.progress = 'hostname resolver started...';
