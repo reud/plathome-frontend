@@ -5,7 +5,6 @@ export interface Item {
 }
 
 export interface EzRequesterModel {
-  url: string;
   protocol: RequestTypes;
   protocolModel: string;
   parameterModel: string;

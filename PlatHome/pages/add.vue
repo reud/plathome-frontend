@@ -73,7 +73,6 @@ export default class Add extends Vue {
 
   addRequestButtonPush() {
     this.ezRequests.push({
-      url: '',
       protocol: RequestTypes.HTTP,
       protocolModel: RequestTypes.HTTP,
       parameterModel: ''
