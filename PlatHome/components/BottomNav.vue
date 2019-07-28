@@ -1,13 +1,6 @@
 <template>
   <v-card flat>
-    <v-bottom-nav
-      :active.sync="bottomNav"
-      :value="true"
-      absolute
-      color="transparent"
-      fixed
-      app
-    >
+    <v-bottom-nav :active.sync="bottomNav" :value="true" fixed app>
       <v-btn
         v-for="(item, i) in items"
         :key="i"

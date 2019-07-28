@@ -7,7 +7,8 @@ export interface Item {
 export interface EzRequesterModel {
   url: string;
   protocol: RequestTypes;
-  model: string;
+  protocolModel: string;
+  parameterModel: string;
 }
 
 export enum DeviceTypes {

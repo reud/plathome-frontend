@@ -37,8 +37,17 @@ import { RequestTypes } from '../types';
         <v-select
           v-model="ezRequest.model"
           :items="requestTypes"
-          :label="'protocol ' + i"
+          :label="'protocol'"
         ></v-select>
+        <v-text-field
+          v-model="RequestUrl"
+          label="hostname"
+          :disabled="true"
+        ></v-text-field>
+        <v-text-field
+          v-model="ezRequest.parameterModel"
+          :label="`parameter ${i + 1}`"
+        ></v-text-field>
       </v-layout>
     </v-container>
   </v-form>
@@ -66,10 +75,13 @@ export default class Add extends Vue {
     this.ezRequests.push({
       url: '',
       protocol: RequestTypes.HTTP,
-      model: ''
+      protocolModel: RequestTypes.HTTP,
+      parameterModel: ''
     });
   }
-
+  get RequestUrl() {
+    return `://${this.ipAddrModel}/`;
+  }
   // mock function
   public async resolveHostname() {
     this.progress = 'hostname resolver started...';
