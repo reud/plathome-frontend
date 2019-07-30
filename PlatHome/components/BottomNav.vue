@@ -17,10 +17,10 @@
 </template>
 
 <script lang="ts">
-import { Prop, Component, Vue } from 'vue-property-decorator';
-import { Item } from '@/types';
+  import { Component, Prop, Vue } from 'vue-property-decorator';
+  import { Item } from '@/types';
 
-@Component
+  @Component
 export default class BottomNav extends Vue {
   @Prop()
   public items!: Item[];
