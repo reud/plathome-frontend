@@ -43,10 +43,11 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
-import { Item } from '@/types';
-import BottomNav from '@/components/BottomNav.vue';
-@Component({
+  import { Component, Vue } from 'vue-property-decorator';
+  import { Item } from '@/types';
+  import BottomNav from '@/components/BottomNav.vue';
+
+  @Component({
   components: { BottomNav }
 })
 export default class Default extends Vue {
@@ -55,7 +56,7 @@ export default class Default extends Vue {
   public fixed: boolean = false;
   public miniVariant: boolean = false;
   public right: boolean = true;
-  public title: string = 'Vuetify.js';
+  public title: string = 'PlatHome';
 
   public items: Item[] = [
     {

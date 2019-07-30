@@ -13,8 +13,9 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
-interface ErrorInterface {
+  import { Component, Prop, Vue } from 'vue-property-decorator';
+
+  interface ErrorInterface {
   statusCode?: number;
 }
 @Component

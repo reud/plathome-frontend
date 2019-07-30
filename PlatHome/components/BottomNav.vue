@@ -1,13 +1,6 @@
 <template>
   <v-card flat>
-    <v-bottom-nav
-      :active.sync="bottomNav"
-      :value="true"
-      absolute
-      color="transparent"
-      fixed
-      app
-    >
+    <v-bottom-nav :active.sync="bottomNav" :value="true" fixed app>
       <v-btn
         v-for="(item, i) in items"
         :key="i"
@@ -24,10 +17,10 @@
 </template>
 
 <script lang="ts">
-import { Prop, Component, Vue } from 'vue-property-decorator';
-import { Item } from '@/types';
+  import { Component, Prop, Vue } from 'vue-property-decorator';
+  import { Item } from '@/types';
 
-@Component
+  @Component
 export default class BottomNav extends Vue {
   @Prop()
   public items!: Item[];
