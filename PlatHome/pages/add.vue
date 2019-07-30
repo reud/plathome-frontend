@@ -69,11 +69,11 @@ import { RequestTypes } from '../types';
 </template>
 
 <script lang="ts">
-  import { Component, Vue } from 'vue-property-decorator';
-  import { GetValueArrayFromEnum, Sleep } from '@/utilities';
-  import { DeviceTypes, EzRequesterModel, RequestTypes } from '@/types';
+import { Component, Vue } from 'vue-property-decorator';
+import { GetValueArrayFromEnum, Sleep } from '@/utilities';
+import { DeviceTypes, EzRequesterModel, RequestTypes } from '@/types';
 
-  @Component
+@Component
 export default class Add extends Vue {
   public valid: boolean = false;
   public ipAddrModel: string = '192.168.0.0';

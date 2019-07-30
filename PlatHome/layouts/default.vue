@@ -43,11 +43,11 @@
 </template>
 
 <script lang="ts">
-  import { Component, Vue } from 'vue-property-decorator';
-  import { Item } from '@/types';
-  import BottomNav from '@/components/BottomNav.vue';
+import { Component, Vue } from 'vue-property-decorator';
+import { Item } from '@/types';
+import BottomNav from '@/components/BottomNav.vue';
 
-  @Component({
+@Component({
   components: { BottomNav }
 })
 export default class Default extends Vue {
