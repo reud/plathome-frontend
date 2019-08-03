@@ -4,6 +4,13 @@ export interface Item {
   to: string;
 }
 
+export interface DeviceData {
+  ezRequesterModels: EzRequesterModel[];
+  deviceType: DeviceTypes;
+  ipAddress: string;
+  hostname: string;
+  description: string;
+}
 export interface EzRequesterModel {
   protocol: RequestTypes;
   protocolModel: string;

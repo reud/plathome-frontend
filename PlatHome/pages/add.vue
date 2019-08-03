@@ -1,4 +1,3 @@
-import { RequestTypes } from '../types';
 <template>
   <v-form ref="form" v-model="valid">
     <v-container>
@@ -38,6 +37,7 @@ import { RequestTypes } from '../types';
             v-model="ezRequest.protocolModel"
             :items="requestTypes"
             :label="'protocol'"
+            @change="insertToProtocol(i)"
           ></v-select>
         </v-flex>
         <v-flex xs10 md10>
@@ -70,7 +70,7 @@ import { RequestTypes } from '../types';
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import { GetValueArrayFromEnum, Sleep } from '@/utilities';
+import { GetValueArrayFromEnum, MapToEnum, Sleep } from '@/utilities';
 import { DeviceTypes, EzRequesterModel, RequestTypes } from '@/types';
 
 @Component
@@ -130,6 +130,16 @@ export default class Add extends Vue {
 
   public deleteEzRequest(index: number) {
     this.ezRequests.splice(index, 1);
+  }
+
+  public insertToProtocol(index: number) {
+    const converted: RequestTypes | undefined = MapToEnum(
+      RequestTypes,
+      this.ezRequests[index]
+    );
+    if (converted !== undefined) {
+      this.ezRequests[index].protocol = converted;
+    }
   }
 }
 </script>

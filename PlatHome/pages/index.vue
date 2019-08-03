@@ -14,7 +14,7 @@
         <v-btn flat dark>Listen now</v-btn>
       </v-card-actions>
     </v-card>
-    <DeviceCard />
+    <DeviceCard :device-data="deviceData" />
   </v-container>
 </template>
 
@@ -23,6 +23,8 @@ import { Component, Vue } from 'vue-property-decorator';
 import Logo from '~/components/Logo.vue';
 import VuetifyLogo from '~/components/VuetifyLogo.vue';
 import DeviceCard from '@/components/DeviceCard.vue';
+import { deviceDataMock } from '@/mocks';
+import { DeviceData } from '@/types';
 
 @Component({
   components: {
@@ -31,5 +33,7 @@ import DeviceCard from '@/components/DeviceCard.vue';
     VuetifyLogo
   }
 })
-export default class Index extends Vue {}
+export default class Index extends Vue {
+  public deviceData: DeviceData = deviceDataMock;
+}
 </script>
