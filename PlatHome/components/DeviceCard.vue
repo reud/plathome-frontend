@@ -10,7 +10,7 @@
     </v-card-title>
 
     <v-card-text>
-      <p class="grey--text subtitle-1">1,000 miles of wonder</p>
+      <p class="green--text subtitle-1">Working</p>
     </v-card-text>
     <v-card-actions>
       <v-btn text>Share</v-btn>
@@ -21,7 +21,7 @@
 
       <v-spacer></v-spacer>
 
-      <v-btn icon @click="show = !show">
+      <v-btn icon @click="descriptionClicked">
         <v-icon>{{
           show ? 'keyboard_arrow_down' : 'keyboard_arrow_up'
         }}</v-icon>
@@ -30,12 +30,16 @@
 
     <v-expand-transition>
       <div v-show="show">
+        <v-btn
+          v-for="(model, i) in deviceData.ezRequesterModels"
+          :key="i"
+          block
+          color="secondary"
+          dark
+          >{{ model.parameterModel }}</v-btn
+        >
         <v-card-text>
-          I'm a thing. But, like most politicians, he promised more than he
-          could deliver. You won't have time for sleeping, soldier, not with all
-          the bed making you'll be doing. Then we'll go with that data file!
-          Hey, you add a one and two zeros to that or we walk! You're going to
-          do his laundry? I've got to find a way to escape.
+          {{ deviceData.description }}
         </v-card-text>
       </div>
     </v-expand-transition>
@@ -43,14 +47,22 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator';
+import { Component, Vue, Prop, Emit } from 'vue-property-decorator';
 import { DeviceData } from '@/types';
 
 @Component
 export default class DeviceCard extends Vue {
-  public show: boolean = false;
+  @Prop({ default: false })
+  public show!: boolean;
   @Prop({ required: true })
   public deviceData!: DeviceData;
+
+  @Emit()
+  moreClicked() {}
+
+  descriptionClicked() {
+    this.moreClicked();
+  }
 }
 </script>
 

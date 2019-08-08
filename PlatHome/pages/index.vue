@@ -3,18 +3,46 @@
     <v-card color="blue-grey darken-2" class="white--text">
       <v-card-title primary-title>
         <div>
-          <div class="headline">Unlimited music now</div>
-          <span
-            >Listen to your favorite artists and albums whenever and wherever,
-            online and offline.</span
-          >
+          <div class="headline">6 device alive</div>
+          <span>Welcome to your PlatHome, Device Utopia is Here</span>
         </div>
       </v-card-title>
       <v-card-actions>
-        <v-btn flat dark>Listen now</v-btn>
+        <v-btn flat dark>Open GitHub</v-btn>
       </v-card-actions>
     </v-card>
-    <DeviceCard :device-data="deviceData" />
+    <v-layout wrap>
+      <DeviceCard
+        :device-data="deviceData"
+        :show="showDesc"
+        @more-clicked="showDesc = !showDesc"
+      />
+      <DeviceCard
+        :device-data="deviceData"
+        :show="showDesc"
+        @more-clicked="showDesc = !showDesc"
+      />
+      <DeviceCard
+        :device-data="deviceData"
+        :show="showDesc"
+        @more-clicked="showDesc = !showDesc"
+      />
+      <DeviceCard
+        :device-data="deviceData"
+        :show="showDesc"
+        @more-clicked="showDesc = !showDesc"
+      />
+      <DeviceCard
+        :device-data="deviceData"
+        :show="showDesc"
+        @more-clicked="showDesc = !showDesc"
+      />
+      <DeviceCard
+        :device-data="deviceData"
+        :show="showDesc"
+        @more-clicked="showDesc = !showDesc"
+      />
+    </v-layout>
   </v-container>
 </template>
 
@@ -35,5 +63,6 @@ import { DeviceData } from '@/types';
 })
 export default class Index extends Vue {
   public deviceData: DeviceData = deviceDataMock;
+  public showDesc: boolean = false;
 }
 </script>
