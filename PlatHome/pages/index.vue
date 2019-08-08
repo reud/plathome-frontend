@@ -8,7 +8,9 @@
         </div>
       </v-card-title>
       <v-card-actions>
-        <v-btn flat dark>Open GitHub</v-btn>
+        <v-btn href="https://github.com/reud/PlatHome" target="_blank" flat dark
+          >Open GitHub</v-btn
+        >
       </v-card-actions>
     </v-card>
     <v-layout wrap>
