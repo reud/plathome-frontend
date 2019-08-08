@@ -52,6 +52,11 @@
           >Delete param {{ i + 1 }}</v-btn
         >
       </v-layout>
+      <v-textarea v-model="description" color="teal">
+        <template v-slot:label>
+          <div>Description<small>(optional)</small></div>
+        </template>
+      </v-textarea>
       <v-layout justify-end="">
         <v-btn
           :loading="isUpdating"
@@ -86,7 +91,7 @@ export default class Add extends Vue {
   public requestTypes: string[] = GetValueArrayFromEnum(RequestTypes);
   public ezRequests: EzRequesterModel[] = [];
   public isUpdating: boolean = false;
-
+  public description: string = '';
   addRequestButtonPush() {
     this.ezRequests.push({
       protocol: RequestTypes.HTTP,
