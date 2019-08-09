@@ -44,7 +44,7 @@
           <v-text-field
             v-model="ezRequest.parameterModel"
             :label="
-              `${ezRequest.protocolModel}://${ipAddrModel}/<param ${i + 1}>`
+              `${ezRequest.protocolModel}://${ipAddrModel}<param ${i + 1}>`
             "
           ></v-text-field>
         </v-flex>
@@ -74,7 +74,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue } from 'nuxt-property-decorator';
 import { GetValueArrayFromEnum, MapToEnum, Sleep } from '@/utilities';
 import { DeviceTypes, EzRequesterModel, RequestTypes } from '@/types';
 
@@ -100,7 +100,7 @@ export default class Add extends Vue {
     });
   }
   get RequestUrl() {
-    return `://${this.ipAddrModel}/`;
+    return `://${this.ipAddrModel}`;
   }
   // mock function
   public async resolveHostname() {

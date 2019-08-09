@@ -43,7 +43,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue } from 'nuxt-property-decorator';
 import { Item } from '@/types';
 import BottomNav from '@/components/BottomNav.vue';
 

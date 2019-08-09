@@ -47,7 +47,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop, Emit } from 'vue-property-decorator';
+import { Component, Vue, Prop, Emit } from 'nuxt-property-decorator';
 import { DeviceData } from '@/types';
 
 @Component
