@@ -1,5 +1,5 @@
 <template>
-  <h2>{{ this.$route.query.ip }}</h2>
+  <h2>Welcome {{ this.$route.query.ip }}</h2>
 </template>
 
 <script lang="ts">

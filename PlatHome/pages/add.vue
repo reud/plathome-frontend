@@ -94,6 +94,7 @@ export default class Add extends Vue {
   public ezRequests: EzRequesterModel[] = [];
   public isUpdating: boolean = false;
   public description: string = '';
+  public mockNumber: number = 0;
   addRequestButtonPush() {
     this.ezRequests.push({
       protocol: RequestTypes.HTTP,
@@ -108,7 +109,7 @@ export default class Add extends Vue {
   public async resolveHostname() {
     this.progress = 'hostname resolver started...';
     this.hostnameLock = true;
-    await Sleep(3000);
+    await Sleep(1000);
     this.hostname = 'mock-hostname';
     this.progress = '';
     this.hostnameLock = false;
@@ -118,7 +119,7 @@ export default class Add extends Vue {
   public async addNewDevice() {
     this.isUpdating = true;
     this.setMock();
-    await Sleep(3000);
+    await Sleep(1000);
     this.isUpdating = false;
   }
 
@@ -151,7 +152,11 @@ export default class Add extends Vue {
   }
 
   public setMock() {
-    vxm.devices.SET_DEVICE_DATA(deviceDataMock);
+    // オブジェクトのコピー(代入だと参照渡しになるため。)
+    this.mockNumber++;
+    const m = deviceDataMock;
+    m.ipAddress = `192.168.0.${this.mockNumber}`;
+    vxm.devices.SET_DEVICE_DATA(m);
   }
 }
 </script>
