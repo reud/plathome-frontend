@@ -11,6 +11,11 @@ export interface DeviceData {
   hostname: string;
   description: string;
 }
+
+export interface DeviceDataState {
+  deviceData: DeviceData[];
+}
+
 export interface EzRequesterModel {
   protocol: RequestTypes;
   protocolModel: string;

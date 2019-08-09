@@ -77,6 +77,8 @@
 import { Component, Vue } from 'nuxt-property-decorator';
 import { GetValueArrayFromEnum, MapToEnum, Sleep } from '@/utilities';
 import { DeviceTypes, EzRequesterModel, RequestTypes } from '@/types';
+import { vxm } from '@/store';
+import { deviceDataMock } from '@/mocks';
 
 @Component
 export default class Add extends Vue {
@@ -115,6 +117,7 @@ export default class Add extends Vue {
   // mock function
   public async addNewDevice() {
     this.isUpdating = true;
+    this.setMock();
     await Sleep(3000);
     this.isUpdating = false;
   }
@@ -145,6 +148,10 @@ export default class Add extends Vue {
     if (converted !== undefined) {
       this.ezRequests[index].protocol = converted;
     }
+  }
+
+  public setMock() {
+    vxm.devices.SET_DEVICE_DATA(deviceDataMock);
   }
 }
 </script>

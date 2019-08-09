@@ -20,7 +20,8 @@
     "nuxt": "^2.8.1",
     "nuxt-property-decorator": "^2.3.0",
     "ts-node": "^8.3.0",
-    "typescript": "^3.5.3"
+    "typescript": "^3.5.3",
+    "vuex-class-component": "^1.9.0"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^1.0.1",

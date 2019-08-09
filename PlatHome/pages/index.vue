@@ -15,31 +15,8 @@
     </v-card>
     <v-layout wrap>
       <DeviceCard
-        :device-data="deviceData"
-        :show="showDesc"
-        @more-clicked="showDesc = !showDesc"
-      />
-      <DeviceCard
-        :device-data="deviceData"
-        :show="showDesc"
-        @more-clicked="showDesc = !showDesc"
-      />
-      <DeviceCard
-        :device-data="deviceData"
-        :show="showDesc"
-        @more-clicked="showDesc = !showDesc"
-      />
-      <DeviceCard
-        :device-data="deviceData"
-        :show="showDesc"
-        @more-clicked="showDesc = !showDesc"
-      />
-      <DeviceCard
-        :device-data="deviceData"
-        :show="showDesc"
-        @more-clicked="showDesc = !showDesc"
-      />
-      <DeviceCard
+        v-for="(deviceData, i) in devicesData"
+        :key="i"
         :device-data="deviceData"
         :show="showDesc"
         @more-clicked="showDesc = !showDesc"
@@ -53,8 +30,8 @@ import { Component, Vue } from 'nuxt-property-decorator';
 import Logo from '~/components/Logo.vue';
 import VuetifyLogo from '~/components/VuetifyLogo.vue';
 import DeviceCard from '@/components/DeviceCard.vue';
-import { deviceDataMock } from '@/mocks';
 import { DeviceData } from '@/types';
+import { vxm } from '@/store';
 
 @Component({
   components: {
@@ -64,7 +41,9 @@ import { DeviceData } from '@/types';
   }
 })
 export default class Index extends Vue {
-  public deviceData: DeviceData = deviceDataMock;
   public showDesc: boolean = false;
+  get devicesData(): DeviceData[] {
+    return vxm.devices.deviceData;
+  }
 }
 </script>
