@@ -19,3 +19,11 @@ export const deviceDataMock: DeviceData = {
   description:
     'The Woodman set to work at once, and so sharp was his axe that the tree was soon chopped nearly through.'
 };
+
+export const deviceDataEmpty: DeviceData = {
+  ezRequesterModels: [],
+  deviceType: DeviceTypes.Etc,
+  ipAddress: 'x',
+  hostname: '',
+  description: ''
+};

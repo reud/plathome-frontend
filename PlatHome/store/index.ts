@@ -21,7 +21,6 @@ export class DeviceDataStore extends VuexModule implements DeviceDataState {
   // @ts-ignore
   @getter deviceData: DeviceData[] = [];
   @getter deviceMap = new Map();
-
   @mutation
   public SET_DEVICE_DATA(payload: DeviceData) {
     this.deviceData.push(deepCopy(payload));
@@ -44,16 +43,17 @@ export class DeviceDataStore extends VuexModule implements DeviceDataState {
   }
 }
 
+export const devices = DeviceDataStore.ExtractVuexModule(DeviceDataStore);
+
 const store = new Vuex.Store({
   modules: {
-    devices: DeviceDataStore.ExtractVuexModule(DeviceDataStore)
+    devices
   }
 });
 
-export default DeviceDataStore.ExtractVuexModule(DeviceDataStore);
-
 export const vxm = {
-  devices: DeviceDataStore.CreateProxy(store, DeviceDataStore)
+  devices: DeviceDataStore.CreateProxy(
+    store,
+    DeviceDataStore
+  ) as DeviceDataStore
 };
-
-
