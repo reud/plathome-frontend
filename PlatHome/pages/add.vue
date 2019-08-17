@@ -44,7 +44,7 @@
           <v-text-field
             v-model="ezRequest.parameterModel"
             :label="
-              `${ezRequest.protocolModel}://${ipAddrModel}/<param ${i + 1}>`
+              `${ezRequest.protocolModel}://${ipAddrModel}<param ${i + 1}>`
             "
           ></v-text-field>
         </v-flex>
@@ -74,9 +74,11 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue } from 'nuxt-property-decorator';
 import { GetValueArrayFromEnum, MapToEnum, Sleep } from '@/utilities';
 import { DeviceTypes, EzRequesterModel, RequestTypes } from '@/types';
+import { vxm } from '@/store';
+import { deviceDataMock } from '@/mocks';
 
 @Component
 export default class Add extends Vue {
@@ -92,6 +94,7 @@ export default class Add extends Vue {
   public ezRequests: EzRequesterModel[] = [];
   public isUpdating: boolean = false;
   public description: string = '';
+  public mockNumber: number = 0;
   addRequestButtonPush() {
     this.ezRequests.push({
       protocol: RequestTypes.HTTP,
@@ -100,13 +103,13 @@ export default class Add extends Vue {
     });
   }
   get RequestUrl() {
-    return `://${this.ipAddrModel}/`;
+    return `://${this.ipAddrModel}`;
   }
   // mock function
   public async resolveHostname() {
     this.progress = 'hostname resolver started...';
     this.hostnameLock = true;
-    await Sleep(3000);
+    await Sleep(1000);
     this.hostname = 'mock-hostname';
     this.progress = '';
     this.hostnameLock = false;
@@ -115,7 +118,8 @@ export default class Add extends Vue {
   // mock function
   public async addNewDevice() {
     this.isUpdating = true;
-    await Sleep(3000);
+    this.setMock();
+    await Sleep(1000);
     this.isUpdating = false;
   }
 
@@ -145,6 +149,14 @@ export default class Add extends Vue {
     if (converted !== undefined) {
       this.ezRequests[index].protocol = converted;
     }
+  }
+
+  public setMock() {
+    // オブジェクトのコピー(代入だと参照渡しになるため。)
+    this.mockNumber++;
+    const m = deviceDataMock;
+    m.ipAddress = `192.168.0.${this.mockNumber}`;
+    vxm.devices.SET_DEVICE_DATA(m);
   }
 }
 </script>

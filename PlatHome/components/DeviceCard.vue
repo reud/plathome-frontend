@@ -15,8 +15,8 @@
     <v-card-actions>
       <v-btn text>Share</v-btn>
 
-      <v-btn text color="purple">
-        Explore
+      <v-btn text color="purple" :to="`/detail?ip=${deviceData.ipAddress}`">
+        Detail
       </v-btn>
 
       <v-spacer></v-spacer>
@@ -47,7 +47,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop, Emit } from 'vue-property-decorator';
+import { Component, Vue, Prop, Emit } from 'nuxt-property-decorator';
 import { DeviceData } from '@/types';
 
 @Component
