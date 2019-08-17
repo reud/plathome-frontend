@@ -8,7 +8,7 @@
         >
           <v-layout column fill-height>
             <v-card-title>
-              <v-btn dark icon>
+              <v-btn dark icon to="/">
                 <v-icon>chevron_left</v-icon>
               </v-btn>
 
