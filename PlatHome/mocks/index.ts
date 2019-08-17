@@ -5,12 +5,12 @@ export const deviceDataMock: DeviceData = {
     {
       protocol: RequestTypes.HTTP,
       protocolModel: 'http',
-      parameterModel: 'hogehoge?exam=hoge'
+      parameterModel: '/hogehoge?exam=hoge'
     },
     {
       protocol: RequestTypes.HTTPS,
       protocolModel: 'https',
-      parameterModel: 'hogehoges?exams=hoges'
+      parameterModel: '/hogehoges?exams=hoges'
     }
   ],
   deviceType: DeviceTypes.Etc,
