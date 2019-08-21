@@ -8,6 +8,6 @@ import (
 // for GORM
 
 type Device struct {
-	models.Device
+	*models.Device
 	gorm.Model
 }

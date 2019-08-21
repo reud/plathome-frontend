@@ -33,7 +33,7 @@ func NewDeleteDevice(ctx *middleware.Context, handler DeleteDeviceHandler) *Dele
 
 /*DeleteDevice swagger:route DELETE /device deleteDevice
 
-Delete Devices from DB
+Delete Devices from DB by ID
 
 */
 type DeleteDevice struct {

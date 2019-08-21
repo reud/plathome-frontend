@@ -29,14 +29,15 @@ paths:
               message:
                 type: "string"
     delete:
-      summary: "Delete Devices from DB"
+      summary: "Delete Devices from DB by ID"
       parameters:
-        - name: "device"
-          in: "body"
+        - name: "id"
+          in: "query"
           required: true
           description: "delete Device"
-          schema:
-            $ref: '#/definitions/Device'
+          type: "integer"
+
+
       responses:
         200:
           description: "delete successful"
@@ -45,6 +46,15 @@ paths:
             properties:
               message:
                 type: "string"
+    get:
+      summary: "get All Device  from DB"
+      responses:
+        200:
+          description: "get successful"
+          schema:
+            type: "array"
+            items:
+              $ref: '#/definitions/Device'
 
 definitions:
   Device:

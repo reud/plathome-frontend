@@ -3,12 +3,16 @@
 package restapi
 
 import (
+	"PlatHome-Backend/controller"
+	gmodels "PlatHome-Backend/gen/models"
+	"PlatHome-Backend/models"
 	"crypto/tls"
+	"github.com/jinzhu/gorm"
 	"net/http"
 
-	errors "github.com/go-openapi/errors"
-	runtime "github.com/go-openapi/runtime"
-	middleware "github.com/go-openapi/runtime/middleware"
+	"github.com/go-openapi/errors"
+	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/runtime/middleware"
 
 	"PlatHome-Backend/gen/restapi/operations"
 )
@@ -33,16 +37,29 @@ func configureAPI(api *operations.PlatHomeAPI) http.Handler {
 
 	api.JSONProducer = runtime.JSONProducer()
 
-	if api.DeleteDeviceHandler == nil {
-		api.DeleteDeviceHandler = operations.DeleteDeviceHandlerFunc(func(params operations.DeleteDeviceParams) middleware.Responder {
-			return middleware.NotImplemented("operation .DeleteDevice has not yet been implemented")
-		})
-	}
-	if api.PutDeviceHandler == nil {
-		api.PutDeviceHandler = operations.PutDeviceHandlerFunc(func(params operations.PutDeviceParams) middleware.Responder {
-			return middleware.NotImplemented("operation .PutDevice has not yet been implemented")
-		})
-	}
+	api.DeleteDeviceHandler = operations.DeleteDeviceHandlerFunc(func(params operations.DeleteDeviceParams) middleware.Responder {
+		db := controller.NewDatabase("postgres", "hogehoge")
+		db.DeleteByID(uint(params.ID))
+		return operations.NewDeleteDeviceOK().WithPayload(&operations.DeleteDeviceOKBody{Message: "Deleted"})
+	})
+	api.PutDeviceHandler = operations.PutDeviceHandlerFunc(func(params operations.PutDeviceParams) middleware.Responder {
+		db := controller.NewDatabase("postgres", "hogehoge")
+		device := &models.Device{params.Device, gorm.Model{}}
+		db.Create(device)
+		return operations.NewPutDeviceOK().WithPayload(&operations.PutDeviceOKBody{Message: "Created"})
+	})
+
+	api.GetDeviceHandler = operations.GetDeviceHandlerFunc(func(params operations.GetDeviceParams) middleware.
+		Responder {
+		db := controller.NewDatabase("postgres", "hogehoge")
+		ms := db.FindAll()
+		gms := []*gmodels.Device{}
+		// downcast
+		for _, m := range ms {
+			gms = append(gms, m.Device)
+		}
+		return operations.NewGetDeviceOK().WithPayload(gms)
+	})
 
 	api.ServerShutdown = func() {}
 

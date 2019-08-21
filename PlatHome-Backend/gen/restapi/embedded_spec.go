@@ -35,6 +35,20 @@ func init() {
   },
   "paths": {
     "/device": {
+      "get": {
+        "summary": "get All Device  from DB",
+        "responses": {
+          "200": {
+            "description": "get successful",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Device"
+              }
+            }
+          }
+        }
+      },
       "put": {
         "parameters": [
           {
@@ -62,16 +76,14 @@ func init() {
         }
       },
       "delete": {
-        "summary": "Delete Devices from DB",
+        "summary": "Delete Devices from DB by ID",
         "parameters": [
           {
+            "type": "integer",
             "description": "delete Device",
-            "name": "device",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/Device"
-            }
+            "name": "id",
+            "in": "query",
+            "required": true
           }
         ],
         "responses": {
@@ -156,6 +168,20 @@ func init() {
   },
   "paths": {
     "/device": {
+      "get": {
+        "summary": "get All Device  from DB",
+        "responses": {
+          "200": {
+            "description": "get successful",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Device"
+              }
+            }
+          }
+        }
+      },
       "put": {
         "parameters": [
           {
@@ -183,16 +209,14 @@ func init() {
         }
       },
       "delete": {
-        "summary": "Delete Devices from DB",
+        "summary": "Delete Devices from DB by ID",
         "parameters": [
           {
+            "type": "integer",
             "description": "delete Device",
-            "name": "device",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/Device"
-            }
+            "name": "id",
+            "in": "query",
+            "required": true
           }
         ],
         "responses": {

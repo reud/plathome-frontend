@@ -9,23 +9,17 @@ import (
 	"errors"
 	"net/url"
 	golangswaggerpaths "path"
-
-	"github.com/go-openapi/swag"
 )
 
-// DeleteDeviceURL generates an URL for the delete device operation
-type DeleteDeviceURL struct {
-	ID int64
-
+// GetDeviceURL generates an URL for the get device operation
+type GetDeviceURL struct {
 	_basePath string
-	// avoid unkeyed usage
-	_ struct{}
 }
 
 // WithBasePath sets the base path for this url builder, only required when it's different from the
 // base path specified in the swagger spec.
 // When the value of the base path is an empty string
-func (o *DeleteDeviceURL) WithBasePath(bp string) *DeleteDeviceURL {
+func (o *GetDeviceURL) WithBasePath(bp string) *GetDeviceURL {
 	o.SetBasePath(bp)
 	return o
 }
@@ -33,12 +27,12 @@ func (o *DeleteDeviceURL) WithBasePath(bp string) *DeleteDeviceURL {
 // SetBasePath sets the base path for this url builder, only required when it's different from the
 // base path specified in the swagger spec.
 // When the value of the base path is an empty string
-func (o *DeleteDeviceURL) SetBasePath(bp string) {
+func (o *GetDeviceURL) SetBasePath(bp string) {
 	o._basePath = bp
 }
 
 // Build a url path and query string
-func (o *DeleteDeviceURL) Build() (*url.URL, error) {
+func (o *GetDeviceURL) Build() (*url.URL, error) {
 	var _result url.URL
 
 	var _path = "/device"
@@ -46,20 +40,11 @@ func (o *DeleteDeviceURL) Build() (*url.URL, error) {
 	_basePath := o._basePath
 	_result.Path = golangswaggerpaths.Join(_basePath, _path)
 
-	qs := make(url.Values)
-
-	id := swag.FormatInt64(o.ID)
-	if id != "" {
-		qs.Set("id", id)
-	}
-
-	_result.RawQuery = qs.Encode()
-
 	return &_result, nil
 }
 
 // Must is a helper function to panic when the url builder returns an error
-func (o *DeleteDeviceURL) Must(u *url.URL, err error) *url.URL {
+func (o *GetDeviceURL) Must(u *url.URL, err error) *url.URL {
 	if err != nil {
 		panic(err)
 	}
@@ -70,17 +55,17 @@ func (o *DeleteDeviceURL) Must(u *url.URL, err error) *url.URL {
 }
 
 // String returns the string representation of the path with query string
-func (o *DeleteDeviceURL) String() string {
+func (o *GetDeviceURL) String() string {
 	return o.Must(o.Build()).String()
 }
 
 // BuildFull builds a full url with scheme, host, path and query string
-func (o *DeleteDeviceURL) BuildFull(scheme, host string) (*url.URL, error) {
+func (o *GetDeviceURL) BuildFull(scheme, host string) (*url.URL, error) {
 	if scheme == "" {
-		return nil, errors.New("scheme is required for a full url on DeleteDeviceURL")
+		return nil, errors.New("scheme is required for a full url on GetDeviceURL")
 	}
 	if host == "" {
-		return nil, errors.New("host is required for a full url on DeleteDeviceURL")
+		return nil, errors.New("host is required for a full url on GetDeviceURL")
 	}
 
 	base, err := o.Build()
@@ -94,6 +79,6 @@ func (o *DeleteDeviceURL) BuildFull(scheme, host string) (*url.URL, error) {
 }
 
 // StringFull returns the string representation of a complete url
-func (o *DeleteDeviceURL) StringFull(scheme, host string) string {
+func (o *GetDeviceURL) StringFull(scheme, host string) string {
 	return o.Must(o.BuildFull(scheme, host)).String()
 }
