@@ -11,7 +11,7 @@ info:
     name: "Apache 2.0"
     url: "http://www.apache.org/licenses/LICENSE-2.0.html"
 paths:
-  /new/device:
+  /device:
     put:
       parameters:
         - name: "device"
@@ -28,6 +28,24 @@ paths:
             properties:
               message:
                 type: "string"
+    delete:
+      summary: "Delete Devices from DB"
+      parameters:
+        - name: "device"
+          in: "body"
+          required: true
+          description: "delete Device"
+          schema:
+            $ref: '#/definitions/Device'
+      responses:
+        200:
+          description: "delete successful"
+          schema:
+            type: "object"
+            properties:
+              message:
+                type: "string"
+
 definitions:
   Device:
     type: "object"
