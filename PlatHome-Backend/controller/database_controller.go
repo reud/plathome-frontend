@@ -36,8 +36,17 @@ func (d *Database) FindAll() []*models.Device {
 	return devices
 }
 
-func (d *Database) DeleteByID(id uint) {
+func (d *Database) Delete(id uint) {
 	dice := models.Device{}
 	dice.ID = id
 	d.db.Delete(dice)
+}
+
+func (d *Database) Update(device *models.Device) {
+	fromRecord := models.Device{}
+	fromRecord.ID = device.ID
+	d.db.First(&fromRecord)
+	d.db.Model(&fromRecord).Update(&device)
+	d.db.Save(&device)
+
 }

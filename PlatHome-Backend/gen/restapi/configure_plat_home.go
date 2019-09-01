@@ -39,7 +39,7 @@ func configureAPI(api *operations.PlatHomeAPI) http.Handler {
 
 	api.DeleteDeviceHandler = operations.DeleteDeviceHandlerFunc(func(params operations.DeleteDeviceParams) middleware.Responder {
 		db := controller.NewDatabase("postgres", "hogehoge")
-		db.DeleteByID(uint(params.ID))
+		db.Delete(uint(params.ID))
 		return operations.NewDeleteDeviceOK().WithPayload(&operations.DeleteDeviceOKBody{Message: "Deleted"})
 	})
 	api.PutDeviceHandler = operations.PutDeviceHandlerFunc(func(params operations.PutDeviceParams) middleware.Responder {
