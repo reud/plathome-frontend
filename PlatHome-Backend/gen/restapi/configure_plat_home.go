@@ -5,16 +5,14 @@ package restapi
 import (
 	"PlatHome-Backend/controller"
 	gmodels "PlatHome-Backend/gen/models"
+	"PlatHome-Backend/gen/restapi/operations"
 	"PlatHome-Backend/models"
 	"crypto/tls"
-	"github.com/jinzhu/gorm"
-	"net/http"
-
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/runtime/middleware"
-
-	"PlatHome-Backend/gen/restapi/operations"
+	"github.com/jinzhu/gorm"
+	"net/http"
 )
 
 //go:generate swagger generate server --target ../../gen --name PlatHome --spec ../../swagger.yaml --exclude-main
@@ -24,7 +22,11 @@ func configureFlags(api *operations.PlatHomeAPI) {
 }
 
 func configureAPI(api *operations.PlatHomeAPI) http.Handler {
-	// configure the api here
+	var (
+		dialect  = "postgres"
+		settings = "host=10.255.0.1 user=postgres port=5432 sslmode=disable"
+	)
+	db := controller.NewDatabase(dialect, settings)
 	api.ServeError = errors.ServeError
 
 	// Set your custom logger if needed. Default one is log.Printf
@@ -38,12 +40,10 @@ func configureAPI(api *operations.PlatHomeAPI) http.Handler {
 	api.JSONProducer = runtime.JSONProducer()
 
 	api.DeleteDeviceHandler = operations.DeleteDeviceHandlerFunc(func(params operations.DeleteDeviceParams) middleware.Responder {
-		db := controller.NewDatabase("postgres", "hogehoge")
 		db.Delete(uint(params.ID))
 		return operations.NewDeleteDeviceOK().WithPayload(&operations.DeleteDeviceOKBody{Message: "Deleted"})
 	})
 	api.PutDeviceHandler = operations.PutDeviceHandlerFunc(func(params operations.PutDeviceParams) middleware.Responder {
-		db := controller.NewDatabase("postgres", "hogehoge")
 		device := &models.Device{params.Device, gorm.Model{}}
 		db.Create(device)
 		return operations.NewPutDeviceOK().WithPayload(&operations.PutDeviceOKBody{Message: "Created"})
@@ -51,7 +51,6 @@ func configureAPI(api *operations.PlatHomeAPI) http.Handler {
 
 	api.GetDeviceHandler = operations.GetDeviceHandlerFunc(func(params operations.GetDeviceParams) middleware.
 		Responder {
-		db := controller.NewDatabase("postgres", "hogehoge")
 		ms := db.FindAll()
 		gms := []*gmodels.Device{}
 		// downcast
