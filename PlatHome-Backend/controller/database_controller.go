@@ -22,7 +22,7 @@ func NewDatabase(dialect string, settings string) *Database {
 	if err != nil {
 		panic(err)
 	}
-	db.AutoMigrate(&models.Device{})
+	db.AutoMigrate(&models.EzRequesterModel{}, &models.Device{})
 	return &Database{db: db}
 }
 
@@ -30,10 +30,13 @@ func (d *Database) Create(device *models.Device) {
 	d.db.Create(device)
 }
 
-func (d *Database) FindAll() []*models.Device {
-	var devices []*models.Device
-	d.db.Find(devices)
-	return devices
+func (d *Database) FindAll() *[]models.Device {
+	var devices []models.Device
+	d.db.Find(&devices)
+	for i := range devices {
+		d.db.Model(devices[i]).Related(&devices[i].EzRequesterModels, "EzRequesterModels")
+	}
+	return &devices
 }
 
 func (d *Database) Delete(id uint) {

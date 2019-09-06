@@ -48,9 +48,9 @@ func (o *DeleteDeviceURL) Build() (*url.URL, error) {
 
 	qs := make(url.Values)
 
-	id := swag.FormatInt64(o.ID)
-	if id != "" {
-		qs.Set("id", id)
+	idQ := swag.FormatInt64(o.ID)
+	if idQ != "" {
+		qs.Set("id", idQ)
 	}
 
 	_result.RawQuery = qs.Encode()

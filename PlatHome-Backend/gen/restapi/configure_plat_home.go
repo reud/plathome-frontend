@@ -4,14 +4,13 @@ package restapi
 
 import (
 	"PlatHome-Backend/controller"
-	gmodels "PlatHome-Backend/gen/models"
 	"PlatHome-Backend/gen/restapi/operations"
 	"PlatHome-Backend/models"
 	"crypto/tls"
+	"fmt"
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/runtime/middleware"
-	"github.com/jinzhu/gorm"
 	"net/http"
 )
 
@@ -44,19 +43,17 @@ func configureAPI(api *operations.PlatHomeAPI) http.Handler {
 		return operations.NewDeleteDeviceOK().WithPayload(&operations.DeleteDeviceOKBody{Message: "Deleted"})
 	})
 	api.PutDeviceHandler = operations.PutDeviceHandlerFunc(func(params operations.PutDeviceParams) middleware.Responder {
-		device := &models.Device{params.Device, gorm.Model{}}
-		db.Create(device)
+		fmt.Println("calling...")
+		fmt.Println(*params.Device.EzRequesterModels[0].Parameter)
+		device := models.NewDevice(params.Device)
+		db.Create(&device)
 		return operations.NewPutDeviceOK().WithPayload(&operations.PutDeviceOKBody{Message: "Created"})
 	})
 
 	api.GetDeviceHandler = operations.GetDeviceHandlerFunc(func(params operations.GetDeviceParams) middleware.
 		Responder {
 		ms := db.FindAll()
-		gms := []*gmodels.Device{}
-		// downcast
-		for _, m := range ms {
-			gms = append(gms, m.Device)
-		}
+		gms := models.ConvertDevices(*ms)
 		return operations.NewGetDeviceOK().WithPayload(gms)
 	})
 
