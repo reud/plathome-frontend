@@ -33,6 +33,7 @@ func main() {
 	parser.LongDescription = "Home Netework Watcher Service"
 
 	server.ConfigureFlags()
+	server.Port = 8080
 	for _, optsGroup := range api.CommandLineOptionsGroups {
 		_, err := parser.AddGroup(optsGroup.ShortDescription, optsGroup.LongDescription, optsGroup.Options)
 		if err != nil {
