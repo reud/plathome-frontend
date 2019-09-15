@@ -32,7 +32,7 @@ import VuetifyLogo from '~/components/VuetifyLogo.vue';
 import DeviceCard from '@/components/DeviceCard.vue';
 import { DeviceData } from '@/types';
 import { vxm } from '@/store';
-import { getDevices } from '@/apis';
+import { GetDevices } from '@/apis';
 
 @Component({
   components: {
@@ -48,7 +48,10 @@ export default class Index extends Vue {
   }
 
   async asyncData() {
-    await getDevices();
+    if (vxm.devices.deviceData.length === 0) {
+      alert('init');
+      await GetDevices();
+    }
   }
 }
 </script>

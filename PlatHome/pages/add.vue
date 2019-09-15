@@ -77,8 +77,7 @@
 import { Component, Vue } from 'nuxt-property-decorator';
 import { GetValueArrayFromEnum, MapToEnum, Sleep } from '@/utilities';
 import { DeviceTypes, EzRequesterModel, RequestTypes } from '@/types';
-import { vxm } from '@/store';
-import { deviceDataMock } from '@/mocks';
+import { PutDevice } from '@/apis';
 
 @Component
 export default class Add extends Vue {
@@ -153,10 +152,21 @@ export default class Add extends Vue {
 
   public setMock() {
     // オブジェクトのコピー(代入だと参照渡しになるため。)
-    this.mockNumber++;
-    const m = deviceDataMock;
-    m.ipAddress = `192.168.0.${this.mockNumber}`;
-    vxm.devices.SET_DEVICE_DATA(m);
+    const deviceType: DeviceTypes | undefined = MapToEnum(
+      DeviceTypes,
+      this.selectedDevice
+    );
+    if (deviceType === undefined) {
+      alert('deviceType undefined');
+      return;
+    }
+    PutDevice({
+      ezRequesterModels: this.ezRequests,
+      deviceType,
+      ipAddress: this.ipAddrModel,
+      hostname: this.hostname,
+      description: this.description
+    });
   }
 }
 </script>

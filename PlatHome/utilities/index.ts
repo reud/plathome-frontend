@@ -4,6 +4,7 @@ import {
   DeviceTypes,
   EzRequesterModel,
   JSONDeviceData,
+  JSONEzRequesterModel,
   RequestTypes
 } from '@/types';
 
@@ -100,5 +101,22 @@ export function JSONParse(jsonDeviceModel: JSONDeviceData): DeviceData {
     ipAddress: jsonDeviceModel.ip,
     hostname: jsonDeviceModel.hostname,
     description: jsonDeviceModel.description
+  };
+}
+
+export function ParseJSON(deviceData: DeviceData): JSONDeviceData {
+  const jsonRequesterModels: JSONEzRequesterModel[] = [];
+  for (const el of deviceData.ezRequesterModels) {
+    jsonRequesterModels.push({
+      protocol: el.protocolModel,
+      parameter: el.parameterModel
+    });
+  }
+  return {
+    ezRequesterModels: jsonRequesterModels,
+    type: deviceData.deviceType.toString(),
+    ip: deviceData.ipAddress,
+    hostname: deviceData.hostname,
+    description: deviceData.description
   };
 }
