@@ -24,6 +24,10 @@ export interface DeviceDataState {
   deviceData: DeviceData[];
 }
 
+export interface LogState {
+  log: string;
+}
+
 export interface EzRequesterModel {
   protocol: RequestTypes;
   protocolModel: string;

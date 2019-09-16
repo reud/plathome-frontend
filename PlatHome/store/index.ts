@@ -7,7 +7,8 @@ import {
 } from 'vuex-class-component';
 import Vuex from 'vuex';
 import Vue from 'vue';
-import { DeviceData, DeviceDataState } from '../types';
+import * as Moment from 'moment';
+import { DeviceData, DeviceDataState, LogState } from '../types';
 import { deepCopy } from '@/utilities';
 
 Vue.use(Vuex);
@@ -43,11 +44,36 @@ export class DeviceDataStore extends VuexModule implements DeviceDataState {
   }
 }
 
+//  for TS1219
+@Module({ namespacedPath: 'log/', target: 'nuxt' })
+// @ts-ignore
+export class LogStore extends VuexModule implements LogState {
+  // @ts-ignore
+  @getter log: string = '';
+
+  @mutation
+  public SET_LOG(payload: string) {
+    this.log += '<' + Moment().format('LLL') + '> ' + payload + '\n';
+  }
+
+  @mutation
+  public CHANGE_LOG(payload: string) {
+    this.log = payload;
+  }
+
+  @action({})
+  public CLEAR_LOG() {
+    this.CHANGE_LOG('');
+  }
+}
+
 export const devices = DeviceDataStore.ExtractVuexModule(DeviceDataStore);
+export const log = LogStore.ExtractVuexModule(LogStore);
 
 const store = new Vuex.Store({
   modules: {
-    devices
+    devices,
+    log
   }
 });
 
@@ -55,5 +81,6 @@ export const vxm = {
   devices: DeviceDataStore.CreateProxy(
     store,
     DeviceDataStore
-  ) as DeviceDataStore
+  ) as DeviceDataStore,
+  log: LogStore.CreateProxy(store, LogStore) as LogStore
 };
