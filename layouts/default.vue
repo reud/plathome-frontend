@@ -70,11 +70,6 @@ export default class Default extends Vue {
       to: '/'
     },
     {
-      icon: 'play_arrow',
-      title: 'Action',
-      to: '/action'
-    },
-    {
       icon: 'history',
       title: 'Log',
       to: '/log'
