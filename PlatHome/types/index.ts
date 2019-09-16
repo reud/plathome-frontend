@@ -12,6 +12,14 @@ export interface DeviceData {
   description: string;
 }
 
+export interface JSONDeviceData {
+  ezRequesterModels: JSONEzRequesterModel[];
+  type: string;
+  ip: string;
+  hostname: string;
+  description: string;
+}
+
 export interface DeviceDataState {
   deviceData: DeviceData[];
 }
@@ -22,10 +30,15 @@ export interface EzRequesterModel {
   parameterModel: string;
 }
 
+export interface JSONEzRequesterModel {
+  protocol: string;
+  parameter: string;
+}
+
 export enum DeviceTypes {
-  RaspberryPi3BPlus = 'Raspberry Pi 3B+',
-  RaspberryPiZero = 'Raspberry Pi zero W (WH)',
-  Etc = 'Etc'
+  RaspberryPi3BPlus = 'raspberry pi 3b+',
+  RaspberryPiZero = 'raspberry pi zero w (wh)',
+  Etc = 'etc'
 }
 
 export enum RequestTypes {
