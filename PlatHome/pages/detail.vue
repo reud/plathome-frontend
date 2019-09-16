@@ -156,6 +156,7 @@ export default class detail extends Vue {
     }
   }
   public async sendPing() {
+    vxm.log.SET_LOG('send ping');
     this.isUpdating = true;
     await Sleep(1000);
     this.isUpdating = false;
