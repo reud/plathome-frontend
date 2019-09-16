@@ -19,3 +19,9 @@ export async function PutDevice(deviceData: DeviceData) {
   await axios.put<JSONDeviceData>(URL, ParseJSON(deviceData));
   vxm.devices.SET_DEVICE_DATA(deviceData);
 }
+
+export async function DeleteDevice(ip: string) {
+  const convertedIP = ip.replace(/\./g, '_');
+  await axios.delete(URL + `?ip=${convertedIP}`);
+  await GetDevices();
+}

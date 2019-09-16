@@ -13,7 +13,9 @@
               </v-btn>
 
               <v-spacer></v-spacer>
-
+              <v-btn dark icon class="mr-3" @click="deleteThisDevice">
+                <v-icon>delete</v-icon>
+              </v-btn>
               <v-btn dark icon class="mr-3">
                 <v-icon>edit</v-icon>
               </v-btn>
@@ -135,6 +137,7 @@ import { DeviceData } from '@/types';
 import { deviceDataEmpty } from '@/mocks';
 import { vxm } from '@/store';
 import { Sleep } from '@/utilities';
+import { DeleteDevice } from '@/apis';
 
 @Component
 export default class detail extends Vue {
@@ -159,9 +162,17 @@ export default class detail extends Vue {
   }
 
   public async sendRequest(i: number) {
-    this.ezRequesterSendingStates[i] = true;
+    Vue.set(this.ezRequesterSendingStates, i, true);
+    // this.ezRequesterSendingStates[i] = true;
     await Sleep(1000);
-    this.ezRequesterSendingStates[i] = false;
+    // this.ezRequesterSendingStates[i] = false;
+    Vue.set(this.ezRequesterSendingStates, i, false);
+  }
+
+  public async deleteThisDevice() {
+    await DeleteDevice(this.ipAddr);
+    alert('device deleted!');
+    this.$router.push('/');
   }
 }
 </script>
