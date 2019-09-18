@@ -3,14 +3,12 @@
     <v-card color="blue-grey darken-2" class="white--text">
       <v-card-title primary-title>
         <div>
-          <div class="headline">6 device alive</div>
+          <div class="headline">{{ devicesData.length }} device exists</div>
           <span>Welcome to your PlatHome, Device Utopia is Here</span>
         </div>
       </v-card-title>
       <v-card-actions>
-        <v-btn href="https://github.com/reud/PlatHome" target="_blank" flat dark
-          >Open GitHub</v-btn
-        >
+        <v-btn flat dark @click="refresh">Refresh</v-btn>
       </v-card-actions>
     </v-card>
     <v-layout wrap>
@@ -46,7 +44,10 @@ export default class Index extends Vue {
   get devicesData(): DeviceData[] {
     return vxm.devices.deviceData;
   }
-
+  public async refresh() {
+    vxm.log.SET_LOG('refresh button clicked');
+    await GetDevices();
+  }
   async asyncData() {
     if (vxm.devices.deviceData.length === 0) {
       vxm.log.SET_LOG('read devices from network...');

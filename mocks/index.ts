@@ -17,7 +17,8 @@ export const deviceDataMock: DeviceData = {
   ipAddress: '192.168.0.xxx',
   hostname: 'example.local',
   description:
-    'The Woodman set to work at once, and so sharp was his axe that the tree was soon chopped nearly through.'
+    'The Woodman set to work at once, and so sharp was his axe that the tree was soon chopped nearly through.',
+  state: 'alive'
 };
 
 export const deviceDataEmpty: DeviceData = {
@@ -25,5 +26,6 @@ export const deviceDataEmpty: DeviceData = {
   deviceType: DeviceTypes.Etc,
   ipAddress: 'x',
   hostname: '',
-  description: ''
+  description: '',
+  state: ''
 };

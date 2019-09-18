@@ -10,11 +10,14 @@
     </v-card-title>
 
     <v-card-text>
-      <p class="green--text subtitle-1">Working</p>
+      <v-chip :color="stateColor" text-color="white">
+        <v-avatar>
+          <v-icon>{{ stateIcon }}</v-icon>
+        </v-avatar>
+        {{ deviceData.state }}
+      </v-chip>
     </v-card-text>
     <v-card-actions>
-      <v-btn text>Share</v-btn>
-
       <v-btn text color="purple" :to="`/detail?ip=${deviceData.ipAddress}`">
         Detail
       </v-btn>
@@ -57,8 +60,29 @@ export default class DeviceCard extends Vue {
   @Prop({ required: true })
   public deviceData!: DeviceData;
 
+  public stateColor: string = 'red';
+  public stateIcon: string = 'error';
   @Emit()
   moreClicked() {}
+
+  mounted() {
+    switch (this.deviceData.state) {
+      case 'waiting':
+        this.stateColor = 'grey';
+        this.stateIcon = 'device_unknown';
+        break;
+      case 'alive':
+        this.stateColor = 'green';
+        this.stateIcon = 'done';
+        break;
+      case 'timeout':
+        this.stateColor = 'red';
+        this.stateIcon = 'notification_important';
+        break;
+      default:
+        break;
+    }
+  }
 
   descriptionClicked() {
     this.moreClicked();
