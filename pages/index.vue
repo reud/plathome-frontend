@@ -3,7 +3,7 @@
     <v-card color="blue-grey darken-2" class="white--text">
       <v-card-title primary-title>
         <div>
-          <div class="headline">{{ deviceData.length }} device exists</div>
+          <div class="headline">{{ devicesData.length }} device exists</div>
           <span>Welcome to your PlatHome, Device Utopia is Here</span>
         </div>
       </v-card-title>

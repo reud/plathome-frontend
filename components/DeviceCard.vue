@@ -18,8 +18,6 @@
       </v-chip>
     </v-card-text>
     <v-card-actions>
-      <v-btn text>Share</v-btn>
-
       <v-btn text color="purple" :to="`/detail?ip=${deviceData.ipAddress}`">
         Detail
       </v-btn>
@@ -67,7 +65,7 @@ export default class DeviceCard extends Vue {
   @Emit()
   moreClicked() {}
 
-  asyncData() {
+  mounted() {
     switch (this.deviceData.state) {
       case 'waiting':
         this.stateColor = 'grey';
@@ -79,7 +77,7 @@ export default class DeviceCard extends Vue {
         break;
       case 'timeout':
         this.stateColor = 'red';
-        this.stateColor = 'notification_important';
+        this.stateIcon = 'notification_important';
         break;
       default:
         break;
