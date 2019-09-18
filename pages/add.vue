@@ -1,3 +1,4 @@
+import { DeviceTypes } from '../types';
 <template>
   <v-form ref="form" v-model="valid">
     <v-container>
@@ -28,8 +29,8 @@
       <h2>API Settings</h2>
       <h3>EZ requester</h3>
       <v-btn block color="secondary" dark @click="addRequestButtonPush"
-        >Add Request Button</v-btn
-      >
+        >Add Request Button
+      </v-btn>
       <v-layout v-for="(ezRequest, i) in ezRequests" :key="i" wrap>
         <!--v-modelなど色々仮実装 -->
         <v-flex xs2 md2>
@@ -49,12 +50,15 @@
           ></v-text-field>
         </v-flex>
         <v-btn block color="red" dark @click="deleteEzRequest(i)"
-          >Delete param {{ i + 1 }}</v-btn
-        >
+          >Delete param {{ i + 1 }}
+        </v-btn>
       </v-layout>
       <v-textarea v-model="description" color="teal">
         <template v-slot:label>
-          <div>Description<small>(optional)</small></div>
+          <div>
+            Description
+            <small>(optional)</small>
+          </div>
         </template>
       </v-textarea>
       <v-layout justify-end="">
@@ -63,7 +67,7 @@
           :disabled="isUpdating"
           color="blue-grey"
           class="ma-2 white--text"
-          @click="addNewDevice"
+          @click="createNewDevice"
         >
           Upload
           <v-icon right dark>cloud_upload</v-icon>
@@ -76,8 +80,14 @@
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator';
 import { GetValueArrayFromEnum, MapToEnum, Sleep } from '@/utilities';
-import { DeviceTypes, EzRequesterModel, RequestTypes } from '@/types';
+import {
+  DeviceData,
+  DeviceTypes,
+  EzRequesterModel,
+  RequestTypes
+} from '@/types';
 import { PutDevice } from '@/apis';
+import { vxm } from '@/store';
 
 @Component
 export default class Add extends Vue {
@@ -93,7 +103,7 @@ export default class Add extends Vue {
   public ezRequests: EzRequesterModel[] = [];
   public isUpdating: boolean = false;
   public description: string = '';
-  public mockNumber: number = 0;
+
   addRequestButtonPush() {
     this.ezRequests.push({
       protocol: RequestTypes.HTTP,
@@ -101,9 +111,11 @@ export default class Add extends Vue {
       parameterModel: ''
     });
   }
+
   get RequestUrl() {
     return `://${this.ipAddrModel}`;
   }
+
   // mock function
   public async resolveHostname() {
     this.progress = 'hostname resolver started...';
@@ -114,12 +126,29 @@ export default class Add extends Vue {
     this.hostnameLock = false;
   }
 
-  // mock function
-  public async addNewDevice() {
+  public async createNewDevice() {
     this.isUpdating = true;
-    this.setMock();
-    await Sleep(1000);
+    const deviceType: DeviceTypes | undefined = MapToEnum(
+      DeviceTypes,
+      this.selectedDevice
+    );
+    if (deviceType === undefined) {
+      alert('deviceType undefined');
+      return;
+    }
+    const d: DeviceData = {
+      ezRequesterModels: this.ezRequests,
+      deviceType,
+      ipAddress: this.ipAddrModel,
+      hostname: this.hostname,
+      description: this.description,
+      state: 'waiting'
+    };
+    await PutDevice(d);
+    vxm.devices.SET_DEVICE_DATA(d);
+    vxm.log.SET_LOG(`device insert ${this.ipAddrModel} success!`);
     this.isUpdating = false;
+    this.$router.push('/');
   }
 
   public static validateIpAddr(ipAddr: string): boolean {
@@ -148,25 +177,6 @@ export default class Add extends Vue {
     if (converted !== undefined) {
       this.ezRequests[index].protocol = converted;
     }
-  }
-
-  public setMock() {
-    // オブジェクトのコピー(代入だと参照渡しになるため。)
-    const deviceType: DeviceTypes | undefined = MapToEnum(
-      DeviceTypes,
-      this.selectedDevice
-    );
-    if (deviceType === undefined) {
-      alert('deviceType undefined');
-      return;
-    }
-    PutDevice({
-      ezRequesterModels: this.ezRequests,
-      deviceType,
-      ipAddress: this.ipAddrModel,
-      hostname: this.hostname,
-      description: this.description
-    });
   }
 }
 </script>

@@ -100,7 +100,8 @@ export function JSONParse(jsonDeviceModel: JSONDeviceData): DeviceData {
     deviceType,
     ipAddress: jsonDeviceModel.ip,
     hostname: jsonDeviceModel.hostname,
-    description: jsonDeviceModel.description
+    description: jsonDeviceModel.description,
+    state: jsonDeviceModel.state
   };
 }
 
@@ -117,6 +118,7 @@ export function ParseJSON(deviceData: DeviceData): JSONDeviceData {
     type: deviceData.deviceType.toString(),
     ip: deviceData.ipAddress,
     hostname: deviceData.hostname,
-    description: deviceData.description
+    description: deviceData.description,
+    state: 'waiting'
   };
 }

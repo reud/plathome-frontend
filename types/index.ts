@@ -10,6 +10,7 @@ export interface DeviceData {
   ipAddress: string;
   hostname: string;
   description: string;
+  state: string;
 }
 
 export interface JSONDeviceData {
@@ -18,6 +19,7 @@ export interface JSONDeviceData {
   ip: string;
   hostname: string;
   description: string;
+  state: string;
 }
 
 export interface DeviceDataState {
