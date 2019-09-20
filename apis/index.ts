@@ -3,7 +3,7 @@ import { DeviceData, JSONDeviceData } from '@/types';
 import { vxm } from '@/store';
 import { JSONParse, ParseJSON } from '@/utilities';
 
-export const URL = 'http://192.168.0.66:8080/';
+export const URL = process.env.BASEURL;
 
 export async function GetDevices() {
   const res = await axios.get<JSONDeviceData[]>(URL + 'device');
