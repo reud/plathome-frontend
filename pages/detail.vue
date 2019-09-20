@@ -16,9 +16,6 @@
               <v-btn dark icon class="mr-3" @click="deleteThisDevice">
                 <v-icon>delete</v-icon>
               </v-btn>
-              <v-btn dark icon class="mr-3">
-                <v-icon>edit</v-icon>
-              </v-btn>
             </v-card-title>
 
             <v-spacer></v-spacer>
@@ -119,7 +116,7 @@
                 icon
                 :loading="isUpdating"
                 :disabled="isUpdating"
-                @click="sendPing"
+                @click="manuallyPing"
               >
                 <v-icon>redo</v-icon>
               </v-btn>
@@ -137,7 +134,7 @@ import { DeviceData } from '@/types';
 import { deviceDataEmpty } from '@/mocks';
 import { vxm } from '@/store';
 import { Sleep } from '@/utilities';
-import { DeleteDevice } from '@/apis';
+import { DeleteDevice, Ping } from '@/apis';
 
 @Component
 export default class detail extends Vue {
@@ -155,12 +152,6 @@ export default class detail extends Vue {
       this.ezRequesterSendingStates.push(false);
     }
   }
-  public async sendPing() {
-    vxm.log.SET_LOG('send ping');
-    this.isUpdating = true;
-    await Sleep(1000);
-    this.isUpdating = false;
-  }
 
   public async sendRequest(i: number) {
     Vue.set(this.ezRequesterSendingStates, i, true);
@@ -174,6 +165,16 @@ export default class detail extends Vue {
     await DeleteDevice(this.ipAddr);
     alert('device deleted!');
     this.$router.push('/');
+  }
+
+  public async manuallyPing() {
+    vxm.log.SET_LOG('send ping');
+    this.isUpdating = true;
+    const res = await Ping(this.ipAddr);
+    alert(res.data.result);
+    vxm.log.SET_LOG(res.data.result);
+    this.isUpdating = false;
+    vxm.log.SET_LOG('ping finished');
   }
 }
 </script>
