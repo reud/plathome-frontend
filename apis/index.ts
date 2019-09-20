@@ -30,3 +30,7 @@ export function Ping(ip: string): Promise<AxiosResponse<JSONPingResult>> {
   const convertedIP = ip.replace(/\./g, '_');
   return axios.get<JSONPingResult>(URL + 'ping' + `?ip=${convertedIP}`);
 }
+
+export function EzRequest(url: string): Promise<AxiosResponse<any>> {
+  return axios.get(url);
+}
