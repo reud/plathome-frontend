@@ -52,7 +52,8 @@
 <script lang="ts">
 import { Component, Vue, Prop, Emit } from 'nuxt-property-decorator';
 import { DeviceData } from '@/types';
-
+import { vxm } from '@/store';
+import { EzRequest} from '@/apis';
 @Component
 export default class DeviceCard extends Vue {
   @Prop({ default: false })
@@ -83,7 +84,19 @@ export default class DeviceCard extends Vue {
         break;
     }
   }
-
+  // WIP
+  public async sendRequest(i: number) {
+    const p = this.deviceData.ezRequesterModels[i].parameterModel;
+    const m = this.deviceData.ezRequesterModels[i].protocolModel;
+    const u = `${m}://${this.deviceData.ipAddress}${p}`;
+    vxm.log.SET_LOG(`GET: ${u}`);
+    try {
+      const r = await EzRequest(u);
+      vxm.log.SET_LOG(`RESULT: ${JSON.stringify(r.data)}`);
+    } catch (e) {
+      vxm.log.SET_LOG(`FAILED: ${JSON.stringify(e.toString())}`);
+    }
+  }
   descriptionClicked() {
     this.moreClicked();
   }
