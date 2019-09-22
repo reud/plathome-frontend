@@ -39,6 +39,9 @@
           block
           color="secondary"
           dark
+          :loading="ezRequesterSendingStates[i]"
+          :disabled="ezRequesterSendingStates[i]"
+          @click="sendRequest(i)"
           >{{ model.parameterModel }}</v-btn
         >
         <v-card-text>
@@ -53,7 +56,7 @@
 import { Component, Vue, Prop, Emit } from 'nuxt-property-decorator';
 import { DeviceData } from '@/types';
 import { vxm } from '@/store';
-import { EzRequest} from '@/apis';
+import { EzRequest } from '@/apis';
 @Component
 export default class DeviceCard extends Vue {
   @Prop({ default: false })
@@ -63,9 +66,15 @@ export default class DeviceCard extends Vue {
 
   public stateColor: string = 'red';
   public stateIcon: string = 'error';
+  public ezRequesterSendingStates: boolean[] = [];
+
   @Emit()
   moreClicked() {}
-
+  created() {
+    for (let i = 0; i < this.deviceData.ezRequesterModels.length; ++i) {
+      this.ezRequesterSendingStates.push(false);
+    }
+  }
   mounted() {
     switch (this.deviceData.state) {
       case 'waiting':
@@ -86,6 +95,7 @@ export default class DeviceCard extends Vue {
   }
   // WIP
   public async sendRequest(i: number) {
+    Vue.set(this.ezRequesterSendingStates, i, true);
     const p = this.deviceData.ezRequesterModels[i].parameterModel;
     const m = this.deviceData.ezRequesterModels[i].protocolModel;
     const u = `${m}://${this.deviceData.ipAddress}${p}`;
@@ -96,6 +106,7 @@ export default class DeviceCard extends Vue {
     } catch (e) {
       vxm.log.SET_LOG(`FAILED: ${JSON.stringify(e.toString())}`);
     }
+    Vue.set(this.ezRequesterSendingStates, i, false);
   }
   descriptionClicked() {
     this.moreClicked();

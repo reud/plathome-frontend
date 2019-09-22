@@ -49,10 +49,8 @@ export default class Index extends Vue {
     await GetDevices();
   }
   async asyncData() {
-    if (vxm.devices.deviceData.length === 0) {
-      vxm.log.SET_LOG('read devices from network...');
-      await GetDevices();
-    }
+    vxm.log.SET_LOG('read devices from network...');
+    await GetDevices();
   }
 }
 </script>

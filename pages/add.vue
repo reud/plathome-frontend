@@ -145,7 +145,6 @@ export default class Add extends Vue {
       state: 'waiting'
     };
     await PutDevice(d);
-    vxm.devices.SET_DEVICE_DATA(d);
     vxm.log.SET_LOG(`device insert ${this.ipAddrModel} success!`);
     this.isUpdating = false;
     this.$router.push('/');
