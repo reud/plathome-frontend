@@ -12,13 +12,21 @@
       </v-card-actions>
     </v-card>
     <v-layout wrap>
-      <DeviceCard
+      <v-flex
         v-for="(deviceData, i) in devicesData"
         :key="i"
-        :device-data="deviceData"
-        :show="showDesc"
-        @more-clicked="showDesc = !showDesc"
-      />
+        xs12
+        sm12
+        md6
+        lg4
+        xl3
+      >
+        <DeviceCard
+          :device-data="deviceData"
+          :show="showDesc"
+          @more-clicked="showDesc = !showDesc"
+        />
+      </v-flex>
     </v-layout>
   </v-container>
 </template>
