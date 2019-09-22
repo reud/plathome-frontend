@@ -51,3 +51,7 @@ export enum RequestTypes {
   HTTP = 'http',
   HTTPS = 'https'
 }
+
+export interface JSONPingResult {
+  result: string;
+}
