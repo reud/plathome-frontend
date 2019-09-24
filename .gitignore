@@ -87,4 +87,3 @@ sw.*
 # Mac OSX
 .DS_Store
 
-yarn.lock
