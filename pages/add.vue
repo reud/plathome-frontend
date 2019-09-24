@@ -16,8 +16,6 @@ import { DeviceTypes } from '../types';
           label="hostname"
           :disabled="hostnameLock"
         ></v-text-field>
-        <v-btn @click="resolveHostname">get hostname from IP address</v-btn>
-        <p>{{ progress }}</p>
       </v-layout>
       <v-layout wrap>
         <v-select
@@ -94,7 +92,6 @@ export default class Add extends Vue {
   public valid: boolean = false;
   public ipAddrModel: string = '192.168.0.0';
   public hostname: string = '';
-  public progress: string = '';
   public hostnameLock: boolean = false;
   public deviceTypes: string[] = GetValueArrayFromEnum(DeviceTypes);
   public selectedDevice: string = '';
@@ -116,15 +113,6 @@ export default class Add extends Vue {
     return `://${this.ipAddrModel}`;
   }
 
-  // mock function
-  public async resolveHostname() {
-    this.progress = 'hostname resolver started...';
-    this.hostnameLock = true;
-    await Sleep(1000);
-    this.hostname = 'mock-hostname';
-    this.progress = '';
-    this.hostnameLock = false;
-  }
 
   public async createNewDevice() {
     this.isUpdating = true;
